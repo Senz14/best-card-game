@@ -1,0 +1,139 @@
+/* Emberfall Duel — a torchlit table: deep charcoal felt, ember oranges,
+   parchment cards. Everything is CSS; the only images are inline SVG. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #f3e9d2;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #4a2410 0%, transparent 60%),
+    radial-gradient(900px 500px at 50% 115%, #2c1503 0%, transparent 55%),
+    linear-gradient(#171310, #0d0b09);
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- title & end screens ---------- */
+#title-screen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+#end-screen {
+  position: fixed; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; background: rgba(5, 3, 2, .74);
+}
+#title-screen[hidden], #end-screen[hidden], #table-root[hidden] { display: none; }
+
+.title-inner, .end-card {
+  max-width: 640px; text-align: center;
+  background: linear-gradient(#241a12, #171008);
+  border: 1px solid #6b4423; border-radius: 16px;
+  padding: 36px 40px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6), inset 0 0 60px rgba(255,140,40,.06);
+}
+.title-flame svg { width: 72px; height: 72px; filter: drop-shadow(0 0 18px rgba(255,140,40,.65)); }
+h1 { margin: 10px 0 4px; font-size: 44px; letter-spacing: 4px; color: #ffb35c; text-shadow: 0 2px 0 #5c2a00; }
+.tagline { font-style: italic; color: #d8c39a; margin: 0 0 16px; }
+.howto { line-height: 1.55; color: #e8dcc0; text-align: left; }
+.big-btn {
+  margin-top: 14px; padding: 12px 30px; font-size: 19px; letter-spacing: 1px;
+  color: #fff7ea; background: linear-gradient(#c85a12, #8f3a05);
+  border: 1px solid #ffb35c; border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.5);
+}
+.big-btn:hover { filter: brightness(1.12); }
+.end-card h2 { font-size: 46px; letter-spacing: 6px; margin: 4px 0 10px; }
+.end-card.won h2 { color: #ffd23c; text-shadow: 0 0 24px rgba(255,180,40,.5); }
+.end-card.lost h2 { color: #9fb4c7; }
+
+/* ---------- table ---------- */
+#table-root { padding: 14px 18px 20px; max-width: 1180px; margin: 0 auto; }
+.table { display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; align-items: center; gap: 16px; }
+
+.portrait { display: flex; gap: 10px; align-items: center; min-width: 250px; }
+.portrait .face {
+  width: 58px; height: 58px; border-radius: 50%; flex: none;
+  font-size: 26px; font-weight: bold; color: #fff7ea;
+  background: radial-gradient(circle at 35% 30%, #ffb35c, #8f3a05 70%);
+  border: 2px solid #ffb35c;
+}
+.portrait.ai .face { background: radial-gradient(circle at 35% 30%, #b9c7d6, #44586e 70%); border-color: #b9c7d6; }
+.portrait .face.targetable { outline: 3px solid #ffd23c; animation: pulse 1s infinite; }
+.pname { font-weight: bold; letter-spacing: .5px; }
+.php { color: #ffb0a0; font-weight: bold; }
+.ai .php { color: #a8c6e8; }
+.pdeck, .penergy { font-size: 13px; color: #cdbd97; }
+.penergy { color: #ffc46b; }
+
+.hand { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; flex: 1; }
+.hand.backs { align-items: center; }
+.card-back {
+  width: 54px; height: 76px; border-radius: 7px;
+  background: repeating-linear-gradient(45deg, #3a2412 0 6px, #2a190b 6px 12px);
+  border: 1px solid #6b4423;
+}
+
+.board {
+  min-height: 158px; display: flex; gap: 10px; justify-content: center; align-items: center;
+  padding: 10px; border-radius: 12px;
+  background: rgba(0,0,0,.28); border: 1px dashed rgba(255,179,92,.25);
+}
+.empty-board { color: #8d7c5c; font-style: italic; }
+
+.midline { text-align: center; }
+.banner { font-size: 19px; font-weight: bold; letter-spacing: 1px; color: #ffd9a0; }
+.logline { font-size: 13.5px; color: #bfae8b; min-height: 17px; font-style: italic; }
+
+/* ---------- cards ---------- */
+.card {
+  --hue: 30;
+  width: 118px; min-height: 158px; padding: 7px 7px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: left; color: #2a1a08;
+  background: linear-gradient(165deg, hsl(var(--hue) 70% 88%), hsl(var(--hue) 55% 74%));
+  border: 2px solid hsl(var(--hue) 60% 38%); border-radius: 10px;
+  box-shadow: 0 5px 12px rgba(0,0,0,.45);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.hand .card:hover { transform: translateY(-8px); }
+.card.unaffordable { filter: saturate(.35) brightness(.82); }
+.card.selected { outline: 3px solid #ffd23c; transform: translateY(-8px); }
+.card.ready { box-shadow: 0 0 0 2px #7dd069, 0 5px 12px rgba(0,0,0,.45); }
+.card.targetable { outline: 2px dashed #ffd23c; }
+.card-top { display: flex; align-items: center; gap: 5px; }
+.cost {
+  flex: none; width: 21px; height: 21px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe1a0, #e07b1f 75%);
+  border: 1px solid #8f3a05; color: #431e00; font-weight: bold;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+}
+.card-name { font-weight: bold; font-size: 12.5px; line-height: 1.1; }
+.card-art {
+  height: 46px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 65%, hsl(var(--hue) 80% 62% / .5), hsl(var(--hue) 70% 30% / .85));
+}
+.card-art svg { width: 34px; height: 34px; }
+.card-text { font-size: 10.8px; line-height: 1.25; flex: 1; }
+.card-stats { display: flex; justify-content: space-between; }
+.card-stats .atk, .card-stats .hp {
+  width: 23px; height: 23px; border-radius: 50%; font-weight: bold; font-size: 13.5px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.card-stats .atk { background: #b3541e; border: 1px solid #6e2f08; }
+.card-stats .hp { background: #7a1f1f; border: 1px solid #4a0f0f; }
+.card-stats .hp.hurt { background: #d33; }
+
+.end-turn {
+  padding: 12px 20px; font-size: 16.5px; font-weight: bold; letter-spacing: .5px;
+  color: #fff7ea; background: linear-gradient(#2f7a3d, #1d5227);
+  border: 1px solid #8fd07a; border-radius: 10px; flex: none;
+}
+.end-turn:disabled { filter: grayscale(.7) brightness(.7); cursor: default; }
+
+@keyframes pulse { 50% { outline-offset: 3px; } }

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emberfall Duel — an original card game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="title-screen">
+    <div class="title-inner">
+      <div class="title-flame" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><path d="M32 2 C38 14 48 20 48 34 A16 16 0 1 1 16 34 C16 20 26 14 32 2 Z" fill="#ff9a3c" stroke="#a83e00" stroke-width="2"/></svg>
+      </div>
+      <h1>EMBERFALL DUEL</h1>
+      <p class="tagline">A card duel over the last ember of a fallen world.</p>
+      <p class="howto">
+        You face <strong>The Ashen Warden</strong>. Each turn your Ember grows by one.
+        Spend it on creatures and spells, trade on the table, and burn the Warden
+        from 20 health to 0 before your own flame dies. <em>Guard</em> creatures must
+        be attacked first; <em>Spark</em> effects fire the moment a creature lands.
+        Click a card to play it, click one of your ready creatures then a target to
+        attack, and press <strong>Enter</strong> or the End Turn button to pass.
+      </p>
+      <button id="start-btn" class="big-btn">Begin the Duel</button>
+    </div>
+  </section>
+
+  <main id="table-root" hidden></main>
+
+  <section id="end-screen" hidden></section>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
